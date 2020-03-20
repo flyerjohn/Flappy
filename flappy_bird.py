@@ -139,6 +139,7 @@ class Base:
         self.x1 = 0
         self.x2 = self.WIDTH
 
+    #'infinite' cycle
     def move(self):
         self.x1 -= self.VELOCITY
         self.x2 -= self.VELOCITY
@@ -149,7 +150,9 @@ class Base:
         if self.x2 + self.WIDTH < 0:
             self.x2 = self.x1 + self.WIDTH
 
-
+    def draw(self, canvas):
+        canvas.blit(self.IMG, (self.x1, self.y))
+        canvas.blit(self.IMG, (self.x2, self.y))
 
 
 
