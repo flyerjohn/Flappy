@@ -81,7 +81,76 @@ class Bird:
         canvas.blit(rotated_img, new_rect.topleft)
 
     def get_mask(self):
-        return pygame.mas.from_surface(self.img)
+        return pygame.mask.from_surface(self.img)
+
+
+class Pipe:
+    GAP = 200
+    VELOCITY = 5
+
+    def __init__(self, x):
+        self.x = x
+        self.height = 0
+
+        self.top = 0
+        self.bot = 0
+        self.PIPE_TOP = pygame.transform.flip(PIPE_IMG, False, True)
+        self.PIPE_BOT = PIPE_IMG
+
+        self.passed = False
+        self.set_height()
+
+    def set_height(self):
+        self.height = random.randrange(50, 450)
+        self.top = self.height - self.PIPE_TOP.get_height()
+        self.bot = self.height + self.GAP
+
+    def move(self):
+        self.x -= self.VELOCITY
+
+    def draw(self, canvas):
+        canvas.blit(self.PIPE_TOP, (self.x, self.top))
+        canvas.blit(self.PIPE_BOT, (self.x, self.bot))
+
+    #pixel colliding method
+    def collide(self, bird):
+        bird_mask = bird.get_mask()
+        top_mask = pygame.mask.from_surface(self.PIPE_TOP)
+        bot_mask = pygame.mask.from_surface(self.PIPE_TOP)
+
+        top_offset = (self.x - bird.x, self.top - round(bird.y))
+        bot_offset = (self.x - bird.x, self.bot - round(bird.y))
+
+        b_point = bird_mask.overlap(bot_mask, bot_offset)
+        t_point = bird_mask.overlap(top_mask, top_offset)
+
+        if t_point or b_point:
+            return True
+        return False
+
+
+class Base:
+    VELOCITY = 5
+    WIDTH = BASE_IMG.get_width()
+    IMG = BASE_IMG
+
+    def __init__(self, y):
+        self.y = y
+        self.x1 = 0
+        self.x2 = self.WIDTH
+
+    def move(self):
+        self.x1 -= self.VELOCITY
+        self.x2 -= self.VELOCITY
+
+        if self.x1 + self.WIDTH < 0:
+            self.x1 = self.x2 + self.WIDTH
+
+        if self.x2 + self.WIDTH < 0:
+            self.x2 = self.x1 + self.WIDTH
+
+
+
 
 
 def draw_canvas(canvas, bird):
@@ -93,12 +162,15 @@ def draw_canvas(canvas, bird):
 def main():
     bird = Bird(200, 200)
     canvas = pygame.display.set_mode((CANVAS_WIDTH, CANVAS_HEIGHT))
+    clock = pygame.time.Clock()
 
     run = True
     while run:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 run = False
+
+        bird.move()
         draw_canvas(canvas, bird)
 
     pygame.quit()
