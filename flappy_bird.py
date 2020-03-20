@@ -155,17 +155,27 @@ class Base:
         canvas.blit(self.IMG, (self.x2, self.y))
 
 
-
-def draw_canvas(canvas, bird):
+def draw_canvas(canvas, bird, base, pipes):
     #draw in canvas
     canvas.blit(BG_IMG, (0, 0))
+
+    for pipe in pipes:
+        pipe.draw(canvas)
+
+    base.draw(canvas)
+
     bird.draw(canvas)
     pygame.display.update()
 
+#game loop
 def main():
-    bird = Bird(200, 200)
+    bird = Bird(230, 350)
+    base = Base(730)
+    pipes = [Pipe(550)]
     canvas = pygame.display.set_mode((CANVAS_WIDTH, CANVAS_HEIGHT))
     clock = pygame.time.Clock()
+
+    score = 0
 
     run = True
     while run:
@@ -173,8 +183,34 @@ def main():
             if event.type == pygame.QUIT:
                 run = False
 
-        bird.move()
-        draw_canvas(canvas, bird)
+        #bird.move()
+        add_pipe = False
+
+        removed = []
+        for pipe in pipes:
+            if pipe.collide(bird):
+                pass
+
+            if pipe.x + pipe.PIPE_TOP.get_width() < 0:
+                removed.append(pipe)
+
+            if not pipe.passed and pipe.x < bird.x:
+                pipe.passed = True
+                add_pipe = True
+            pipe.move()
+        
+        if add_pipe:
+            score += 1
+            pipes.append(Pipe(550))
+
+        for r in removed:
+            pipes.remove(r)
+
+        if bird.y + bird.img.get_height() >= 730:
+            pass
+        
+        base.move()
+        draw_canvas(canvas, bird, base, pipes)
 
     pygame.quit()
     quit()
