@@ -6,20 +6,20 @@
 #### To run the game in your computer, you need to make sure that the following Python Modules are installed in your virtual container or actuall machine:
 - 1 -> Pygame; To install, run the following on your bash terminal:
   ```bash
-  python3 install pygame
+  pip3 install pygame
   ```
   If your running Python 3.7+ or else; and:
   ```bash
-  python install pygame
+  pip install pygame
   ```
   If your runing Python2.7-.
 - 2 -> NEAT; To install, run the following on your bash terminal:
   ```bash
-  python3 install neat-python
+  pip3 install neat-python
   ```
   If your running Python 3.7+ or else; and:
   ```bash
-  python install neat-python
+  pip install neat-python
   ``` 
   If your runing Python2.7-.
   
