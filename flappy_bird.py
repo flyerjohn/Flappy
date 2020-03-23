@@ -3,7 +3,7 @@ import os
 import time
 import neat
 import random
-
+pygame.font.init() #initializing the font module in pyame
 
 CANVAS_WIDTH = 500
 CANVAS_HEIGHT = 800
@@ -13,6 +13,7 @@ PIPE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "pipe
 BASE_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "base.png")))
 BG_IMG = pygame.transform.scale2x(pygame.image.load(os.path.join("imgs", "bg.png")))
 
+STAT_FONT = pygame.font.SysFont("comicsans", 50)
 
 class Bird:
     IMGS = BIRD_IMGS
@@ -155,12 +156,15 @@ class Base:
         canvas.blit(self.IMG, (self.x2, self.y))
 
 
-def draw_canvas(canvas, bird, base, pipes):
+def draw_canvas(canvas, bird, base, pipes, score):
     #draw in canvas
     canvas.blit(BG_IMG, (0, 0))
 
     for pipe in pipes:
         pipe.draw(canvas)
+
+    text = STAT_FONT.render("Score: " + str(score), 1, (255,255,255))
+    canvas.blit(text, (CANVAS_WIDTH - 10 - text.get_width(), 10))
 
     base.draw(canvas)
 
@@ -208,9 +212,9 @@ def main():
 
         if bird.y + bird.img.get_height() >= 730:
             pass
-        
+
         base.move()
-        draw_canvas(canvas, bird, base, pipes)
+        draw_canvas(canvas, bird, base, pipes, score)
 
     pygame.quit()
     quit()
