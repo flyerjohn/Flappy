@@ -27,5 +27,5 @@
 ```bash
 python3 flappy_bird.py
 ```
-  If you've done everything correctly, and if everything worked well, you should have the game playing for it self. Feel free to play with the code and watch the results. 
-  I also encourage you to change the code to make it a full playable game. GLHF! Or should I say, Good Work Have Fun :)
+  If you've done everything correctly, and if everything worked well, you should have the game playing for itself. Feel free to play with the code and watch the results. 
+  I also encourage you to change the code and make it a full playable game. GLHF! Or should I say, Good Work Have Fun :)
