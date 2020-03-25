@@ -23,4 +23,9 @@
   ``` 
   If your runing Python2.7-.
   
-Feel free to play with the code and watch the results. GLHF! Or should I say, Good Work Have Fun :)
+### After being sure you have the modules installed, run the following command on your bash:
+```bash
+python3 flappy_bird.py
+```
+  If you've done everything correctly, and if everything worked well, you should have the game playing for it self. Feel free to play with the code and watch the results. 
+  I also encourage you to change the code to make it a full playable game. GLHF! Or should I say, Good Work Have Fun :)
